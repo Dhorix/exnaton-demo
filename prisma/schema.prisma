@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Meter {
+  muid        String   @id @db.Uuid
+  name        String?
+  type        String?
+  location    String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  readings    EnergyReading[]
+  
+  @@map("meters")
+}
+
+model EnergyReading {
+  id              Int      @id @default(autoincrement())
+  muid            String   @db.Uuid
+  timestamp       DateTime
+  measurementType String   @map("measurement_type")
+  value           Decimal  @db.Decimal(10, 6)
+  quality         String   @default("measured")
+  fieldCode       String   @map("field_code")
+  createdAt       DateTime @default(now()) @map("created_at")
+  
+  meter           Meter    @relation(fields: [muid], references: [muid])
+  
+  @@map("energy_readings")
+  @@index([muid, timestamp])
+  @@index([fieldCode])
+}

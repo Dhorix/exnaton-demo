@@ -1,16 +1,13 @@
-# exnaton-challenge-demo
-comprehensive `README.md` file** tailored specifically to this project structure and implementation details. It’s structured clearly to guide reviewers through what i built and how it works
+exnaton-challenge-demo
+comprehensive README.md file tailored specifically to this project structure and implementation details. It’s structured clearly to guide reviewers through what i built and how it works.
 
----
-
-```markdown
-# ⚡ Exnaton Coding Challenge - Energy Data Platform
+Exnaton Coding Challenge - Energy Data Platform
 
 This project is a complete implementation of Exnaton's technical challenge, involving the ingestion, analysis, storage, and exposure of smart meter energy data via a backend API, with deployment-ready configurations. The guide provides the comprehensive step-by-step solution for the Exnaton energy data management covering data exploration, backend development and deployment strategies.
 
 ---
 
-## 📚 Table of Contents
+Table of Contents
 
 - [Overview](#overview)
 - [Project Structure](#project-structure)
@@ -27,15 +24,13 @@ This project is a complete implementation of Exnaton's technical challenge, invo
 
 ---
 
-## 📌 Overview
 
 This project processes and serves smart meter data for multiple tenants. It supports querying energy readings over time, analyzing usage patterns, and visualizing consumption data. It is ready for scalable deployment and multi-tenant operation.
 
 ---
 
-## 🧱 Project Structure
+Project Structure
 
-```
 
 exnaton-challenge/
 ├── prisma/                  # Prisma ORM schema and migrations
@@ -52,73 +47,67 @@ exnaton-challenge/
 ├── package.json            # Dependencies and scripts
 └── README.md               # Project documentation
 
-```
+
+Features
+
+ - Energy data analysis (daily patterns, autocorrelation, 15-min intervals)
+- RESTful API to query and aggregate energy usage
+- PostgreSQL + TimescaleDB for scalable time-series storage
+- Fully containerized with Docker & Kubernetes
+- Multi-tenant support
+- Swagger UI for API testing
+- Production-ready deployment scripts
 
 ---
 
-## ✨ Features
+Task Breakdown
 
-- 🧪 Energy data analysis (daily patterns, autocorrelation, 15-min intervals)
-- 📡 RESTful API to query and aggregate energy usage
-- 🧾 PostgreSQL + TimescaleDB for scalable time-series storage
-- 🧰 Fully containerized with Docker & Kubernetes
-- 🏢 Multi-tenant support
-- 📊 Swagger UI for API testing
-- ⚙️ Production-ready deployment scripts
+Task A: Data Exploration
 
----
-
-## 📊 Task Breakdown
-
-### ✅ Task A: Data Exploration
-
-- **Data Format**:
+- Data Format:
   - Smart meter data in JSON format
   - 15-minute intervals (ISO 8601 timestamps)
   - Values tagged by hexadecimal fields
 
-- **Hypothesis**:
+- Hypothesis:
   - Meter 1: Primary residential/commercial usage
   - Meter 2: Solar/battery/backup (mostly idle)
 
-- **Findings**:
+- Findings:
   - Regular daily energy cycles
   - Meter 2 shows intermittent readings
   - Autocorrelation suggests consistent human activity patterns
 
-### ✅ Task B: Backend Implementation
+Task B: Backend Implementation
 
-- **Framework**: Node.js + Express
-- **Database**: PostgreSQL (TimescaleDB optimized)
-- **ORM**: Prisma for schema and querying
-- **Endpoints**:
-  - `GET /api/energy`: Fetch readings by `muid`, time range, and aggregation
-  - `POST /api/ingest`: Load JSON meter data into the database
-- **Swagger UI**: Available at `/docs`
+- Framework: Node.js + Express
+- Database: PostgreSQL (TimescaleDB optimized)
+- ORM: Prisma for schema and querying
+- Endpoints:
+  - 'GET /api/energy': Fetch readings by 'muid', time range, and aggregation
+  - 'POST /api/ingest': Load JSON meter data into the database
+- Swagger UI: Available at `/docs`
 
-#### 🔍 API Example
-```
+API Example
 
-GET /api/energy?muid=95ce...\&start=2023-02-01\&end=2023-02-28\&interval=daily
+GET /api/energy?muid=95ce...\&start=2023-02-01\&end=2023-02-28\&interval=da
 
-```
+Task C: Deployment & Scalability
 
-### ✅ Task C: Deployment & Scalability
-
-- **Dockerized Setup**:
-  - `docker-compose` for local development
+- Dockerized Setup:
+  - 'docker-compose' for local development
   - Includes PostgreSQL, Node backend, NGINX
-- **Kubernetes (K8s)**:
+- Kubernetes (K8s):
   - Separate deployment files for app and DB
   - Ready for Helm migration or production clusters
 
-#### 🏢 Multi-Tenancy Support
-- `tenant_id` included in schema (extendable)
+   Multi-Tenancy Support
+- tenant_id included in schema (extendable)
 - Isolation via query scoping or DB schemas
 
 ---
 
-## ⚙️ Tech Stack
+Tech Stack
 
 | Layer         | Technology              |
 |--------------|--------------------------|
@@ -132,11 +121,10 @@ GET /api/energy?muid=95ce...\&start=2023-02-01\&end=2023-02-28\&interval=daily
 
 ---
 
-## 📘 API Documentation
+API Documentation
 
 Once the server is running, visit:
 
-```
 
 [http://localhost:3000/docs](http://localhost:3000/docs)
 
@@ -146,19 +134,19 @@ Swagger UI provides interactive documentation with request/response schemas, par
 
 ---
 
-## ⚙️ Setup Guide
+Setup Guide
 
-### 🔧 EC2 & Local Setup
+ EC2 & Local Setup
 
 Follow these steps on EC2 (or locally):
 
-#### 1. Clone Repo
+1. Clone Repo
 ```bash
 git clone https://github.com/Dhorix/exnaton-challenge-demo.git
 cd exnaton-challenge-demo
 ````
 
-#### 2. Install Node.js & Docker
+2. Install Node.js & Docker
 
 ```bash
 # Node.js 18
@@ -177,7 +165,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ```
 
-#### 3. Start App
+3. Start App
 
 ```bash
 # Build and start containers
@@ -185,35 +173,35 @@ docker-compose up --build
 ```
 
 App will be available at:
-🔗 `http://localhost:3000`
+ http://localhost:3000
 
 ---
 
-## 🚀 Kubernetes & Production Deployment
+Kubernetes & Production Deployment
 
-### Apply K8s Resources
+Apply K8s Resources
 
 ```bash
 kubectl apply -f k8s/postgres.yaml
 kubectl apply -f k8s/deployment.yaml
 ```
 
-### Expose Services
+Expose Services
 
 * Configure Ingress or LoadBalancer for external traffic
 * Optional: add horizontal pod autoscaler
 
 ---
 
-## ⚙️ Performance Considerations
+Performance Considerations
 
-### Bottlenecks:
+Bottlenecks:
 
 * Time-series aggregation on large queries
 * JSON parsing in ingestion
 * Cross-tenant database access
 
-### Mitigation:
+Mitigation:
 
 * TimescaleDB hypertables & indexes
 * Caching frequent queries (e.g. Redis)
@@ -221,7 +209,7 @@ kubectl apply -f k8s/deployment.yaml
 
 ---
 
-## ✅ Status: Complete & Ready for Review
+Status: Complete & Ready for Review
 
 This challenge demonstrates practical skills across data engineering, backend architecture, DevOps, and system design — aligned with Exnaton's goals of building understandable and accessible energy systems.
 
